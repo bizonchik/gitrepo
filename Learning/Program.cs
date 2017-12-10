@@ -46,6 +46,7 @@ namespace Learning
             var bs = false;
             var fsInd = -1;
             var lsInd = 0;
+            var needNeg = 1;
 
             foreach (var lex in expression)
             {
@@ -65,6 +66,7 @@ namespace Learning
                 if(ind == 0 &&lex == '-' )
                 {
                     ind++;
+                    needNeg = -1;
                     continue;
                 }
 
@@ -87,7 +89,7 @@ namespace Learning
                 }
 
                 if(bs && ind == expression.Length-1)
-                    return Calculate(expression.Substring(fsInd+1, lsInd - (fsInd + 1)));
+                    return Calculate(expression.Substring(fsInd+1, lsInd - (fsInd + 1))) * needNeg;
                
                 ind++;
             }
