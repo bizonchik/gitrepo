@@ -32,6 +32,7 @@ namespace Learning
             var bs = false;
             var fsInd = -1;
             var lsInd = 0;
+            var needNeg = 1;
 
             foreach (var lex in expression)
             {
@@ -48,11 +49,18 @@ namespace Learning
                     sCnt--;
                 }
 
+                if(ind == 0 &&lex == '-' )
+                {
+                    ind++;
+                    needNeg = -1;
+                    continue;
+                }
+
                 if (lex == '+' && sCnt == 0)
                     return Calculate(expression.Substring(0, ind)) + Calculate(expression.Substring(ind + 1));
 
                 if (lex == '-' && sCnt == 0)
-                    return Calculate(expression.Substring(0, ind)) - Calculate(expression.Substring(ind + 1));
+                    return Calculate(expression.Substring(0, ind)) + Calculate(expression.Substring(ind));
 
                 //if (lex == '*' && sCnt == 0)
                 //    return Calculate(expression.Substring(0, ind)) * Calculate(expression.Substring(ind + 1));
@@ -67,7 +75,7 @@ namespace Learning
                 }
 
                 if(bs && ind == expression.Length-1)
-                    return Calculate(expression.Substring(fsInd+1, lsInd - (fsInd + 1)));
+                    return Calculate(expression.Substring(fsInd+1, lsInd - (fsInd + 1))) * needNeg;
                
                 ind++;
             }
