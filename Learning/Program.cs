@@ -24,20 +24,6 @@ namespace Learning
 
     public class Calc
     {
-        public class Priority
-        {
-            public string Lexem { get; set; }
-            public int Level { get; set; }
-
-            public Priority(string lexem, int level)
-            {
-                Lexem = lexem;
-                Level = level;
-            }
-
-        }
-
-        public List<Priority> LexemPriority { get; set; }
 
         public static double Calculate(string expression)
         {
