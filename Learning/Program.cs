@@ -62,11 +62,17 @@ namespace Learning
                     sCnt--;
                 }
 
+                if(ind == 0 &&lex == '-' )
+                {
+                    ind++;
+                    continue;
+                }
+
                 if (lex == '+' && sCnt == 0)
                     return Calculate(expression.Substring(0, ind)) + Calculate(expression.Substring(ind + 1));
 
                 if (lex == '-' && sCnt == 0)
-                    return Calculate(expression.Substring(0, ind)) - Calculate(expression.Substring(ind + 1));
+                    return Calculate(expression.Substring(0, ind)) + Calculate(expression.Substring(ind));
 
                 //if (lex == '*' && sCnt == 0)
                 //    return Calculate(expression.Substring(0, ind)) * Calculate(expression.Substring(ind + 1));
