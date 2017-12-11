@@ -62,11 +62,33 @@ namespace Learning
                 if (lex == '-' && sCnt == 0)
                     return Calculate(expression.Substring(0, ind)) + Calculate(expression.Substring(ind));
 
-                //if (lex == '*' && sCnt == 0)
-                //    return Calculate(expression.Substring(0, ind)) * Calculate(expression.Substring(ind + 1));
+                if (lex == '*' && sCnt == 0)
+                {
+                    var pExist = 0;
+                    var sOpen = 0;
+                    foreach (var l in expression.Substring(ind+1))
+                    {
+                        if (l == '(') sOpen++;
+                        if (l == ')') sOpen--;
+                        if ((l == '+' || l == '-') && sOpen == 0) pExist++;
+                    }
+                    if(pExist == 0)
+                        return Calculate(expression.Substring(0, ind)) * Calculate(expression.Substring(ind + 1));
+                }
 
-                //if (lex == '/' && sCnt == 0)
-                //    return Calculate(expression.Substring(0, ind)) / Calculate(expression.Substring(ind + 1));
+                if (lex == '/' && sCnt == 0)
+                {
+                    var pExist = 0;
+                    var sOpen = 0;
+                    foreach (var l in expression.Substring(ind + 1))
+                    {
+                        if (l == '(') sOpen++;
+                        if (l == ')') sOpen--;
+                        if ((l == '+' || l == '-') && sOpen == 0) pExist++;
+                    }
+                    if (pExist == 0)
+                        return Calculate(expression.Substring(0, ind)) / Calculate(expression.Substring(ind + 1));
+                }
 
                 if (sCnt != 0)
                 {
