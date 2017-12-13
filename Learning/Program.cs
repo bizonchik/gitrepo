@@ -10,7 +10,7 @@ namespace Learning
     {
         static void Main()
         {
-            while(true)
+            while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("введите выражение");
@@ -40,7 +40,7 @@ namespace Learning
                 {
                     sCnt++;
                     bs = true;
-                    if(fsInd == -1) fsInd = ind;
+                    if (fsInd == -1) fsInd = ind;
                 }
 
                 if (lex == ')')
@@ -49,7 +49,7 @@ namespace Learning
                     sCnt--;
                 }
 
-                if(ind == 0 &&lex == '-' )
+                if (ind == 0 && lex == '-')
                 {
                     ind++;
                     needNeg = -1;
@@ -66,13 +66,21 @@ namespace Learning
                 {
                     var pExist = 0;
                     var sOpen = 0;
-                    foreach (var l in expression.Substring(ind+1))
+                    var mExist = 0;
+                    foreach (var l in expression.Substring(ind + 1))
                     {
                         if (l == '(') sOpen++;
                         if (l == ')') sOpen--;
                         if ((l == '+' || l == '-') && sOpen == 0) pExist++;
+                        if ((l == '*' || l == '/') && sOpen == 0) mExist++;
                     }
-                    if(pExist == 0)
+
+                    if (pExist == 0 && mExist > 0)
+                    {
+                        ind++;
+                        continue;
+                    }
+                    if (pExist == 0)
                         return Calculate(expression.Substring(0, ind)) * Calculate(expression.Substring(ind + 1));
                 }
 
@@ -80,11 +88,19 @@ namespace Learning
                 {
                     var pExist = 0;
                     var sOpen = 0;
+                    var mExist = 0;
                     foreach (var l in expression.Substring(ind + 1))
                     {
                         if (l == '(') sOpen++;
                         if (l == ')') sOpen--;
                         if ((l == '+' || l == '-') && sOpen == 0) pExist++;
+                        if ((l == '*' || l == '/') && sOpen == 0) mExist++;
+                    }
+
+                    if (pExist == 0 && mExist > 0)
+                    {
+                        ind++;
+                        continue;
                     }
                     if (pExist == 0)
                         return Calculate(expression.Substring(0, ind)) / Calculate(expression.Substring(ind + 1));
@@ -96,9 +112,9 @@ namespace Learning
                     continue;
                 }
 
-                if(bs && ind == expression.Length-1)
-                    return Calculate(expression.Substring(fsInd+1, lsInd - (fsInd + 1))) * needNeg;
-               
+                if (bs && ind == expression.Length - 1)
+                    return Calculate(expression.Substring(fsInd + 1, lsInd - (fsInd + 1))) * needNeg;
+
                 ind++;
             }
             return Convert.ToDouble(expression);
