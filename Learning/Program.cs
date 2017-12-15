@@ -119,5 +119,10 @@ namespace Learning
             }
             return Convert.ToDouble(expression);
         }
+
+        public static void TestForBranch()
+        {
+
+        }
     }
 }
